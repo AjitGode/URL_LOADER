@@ -5,18 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Reload Page</title>
     <script>
-        // Function to reload the page every 50 seconds
         function autoReload() {
             setInterval(function() {
-                window.location.href = "https://yugtech-springboot.onrender.com/";
-            }, 45000); // 50000 milliseconds = 50 seconds
+                // First reload the external URL in the background
+                fetch("https://yugtech-springboot.onrender.com/")
+                    .then(() => {
+                        // Then reload the current page (index.html)
+                        window.location.reload(true);
+                    })
+                    .catch(error => {
+                        console.error('Error reloading URL:', error);
+                        window.location.reload(true);
+                    });
+            }, 45000); // 45 seconds
         }
 
-        // Call the function when the page loads
         window.onload = autoReload;
     </script>
 </head>
 <body>
-    <h1>Page will reload every 45 seconds</h1>
+    <h1>Reloading both this page and external URL every 45 seconds</h1>
 </body>
 </html>
